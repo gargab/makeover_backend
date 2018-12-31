@@ -11,7 +11,7 @@ class user(models.Model):
 	first_name=models.CharField(max_length=1000)
 	last_name=models.CharField(max_length=1000)
 	admin=models.IntegerField(default=0)
-	active=models.IntegerField(default=0)
+	active=models.IntegerField(default=1)
 	email=models.CharField(max_length=1000)
 	group_id=models.IntegerField(null=True,blank=True)
 	token=models.CharField(max_length=1000,null=True,blank=True)
@@ -55,16 +55,17 @@ class customer(models.Model):
 
 class order(models.Model):
 	status=models.CharField(max_length=1000)
-	agent_id=models.IntegerField()
+	agent_id=models.CharField(max_length=1000)
+	group_id=models.IntegerField(null=True, blank=True)
 	customer_id=models.IntegerField()
 	timestamp=models.DateTimeField(default=timezone.now)
-	order_value=models.IntegerField()
+	order_value=models.IntegerField(null=True, blank=True)
 	def __str__(self):
-		return self.customer_id + " " + self.status
+		return str(self.customer_id) + " " + str(self.status)
 
 class order_products(models.Model):
-	product_id=models.IntegerField()
+	product_table_id=models.IntegerField()
 	quantity=models.IntegerField()
 	order_id=models.IntegerField()
 	def __str__(self):
-		return self.product_id + " " + self.order_id
+		return str(self.product_table_id) + " " + str(self.order_id)
